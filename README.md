@@ -66,7 +66,7 @@ No se utilizó ningún framework externo.
 
 Nahuel González  
 Desarrollador Full-Stack  
-React | Shopify | .NET | Automatización con IA  
+
 
 
 ---
@@ -139,4 +139,4 @@ No external frameworks were used.
 
 Nahuel González  
 Full-Stack Developer  
-React | Shopify | .NET | AI Automation  
+
