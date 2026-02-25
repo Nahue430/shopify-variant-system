@@ -4,23 +4,23 @@
 
 Este repositorio contiene mi implementación de un desafío técnico realizado en Shopify.
 
-El objetivo fue desarrollar un sistema dinámico de manejo de variantes de producto utilizando **Shopify Liquid** y **JavaScript Vanilla**, asegurando:
+El objetivo fue extender el sistema nativo de variantes de Shopify para mostrar contenido dinámico específico por variante, utilizando **Shopify Liquid** y **JavaScript Vanilla**, asegurando:
 
-- Selección correcta de variantes
-- Actualización de precio en tiempo real
-- Validación antes de agregar el producto al carrito
+- Renderizado dinámico de contenido según la variante seleccionada  
+- Actualización automática del contenido al cambiar la variante  
+- Comportamiento consistente con el sistema nativo del tema  
 
-La solución fue implementada directamente dentro de un entorno de tema Shopify.
+La solución fue implementada directamente dentro de un entorno de tema Shopify, sin alterar la lógica interna de selección de variantes.
 
 ---
 
 ## 🚀 Funcionalidades Implementadas
 
-- Detección y matching dinámico de variantes
-- Actualización automática de precio según la opción seleccionada
-- Validación previa al envío del formulario de compra
-- Sincronización entre los datos del producto (`product.variants`) y el estado del frontend
-- Manejo estructurado de eventos del DOM
+- Renderizado dinámico de características asociadas a cada variante  
+- Uso de **metafields personalizados por variante**  
+- Sincronización con el selector nativo de variantes de Shopify  
+- Actualización automática del contenido ante cambios reales de variante  
+- Manejo estructurado y seguro del DOM  
 
 ---
 
@@ -28,16 +28,18 @@ La solución fue implementada directamente dentro de un entorno de tema Shopify.
 
 ### 🔹 Capa Liquid
 
-- Serialización de `product.variants` en formato JSON
-- Inyección de datos del producto al frontend
-- Estructuración del marcado para permitir selección dinámica de opciones
+- Iteración sobre `product.variants`
+- Extracción de metafields personalizados (`variant.metafields.custom.variant_features`)
+- Serialización controlada de los metafields necesarios
+- Construcción de un mapa estructurado `variantId → features`
+- Inyección de dicha estructura en el frontend mediante `window.variantFeatures`
 
 ### 🔹 Capa JavaScript
 
-- Algoritmo de búsqueda y matching de variantes
-- Manejo del estado de las opciones seleccionadas
-- Actualización dinámica de precio y disponibilidad
-- Lógica de validación para evitar combinaciones inválidas
+- Escucha de eventos reales de cambio de variante (`input[name="id"]`)
+- Renderizado dinámico del contenido asociado al `variantId` seleccionado
+- Actualización segura del DOM
+- Renderizado inicial al cargar la página para mantener consistencia visual
 
 ---
 
@@ -52,9 +54,11 @@ La solución fue implementada directamente dentro de un entorno de tema Shopify.
 
 ## 🧩 Contexto
 
-La implementación se realizó respetando las limitaciones propias de Shopify (estructura de tema, objeto `product`, comportamiento del carrito, etc.), priorizando claridad, mantenimiento y comportamiento predecible del sistema.
+La implementación respeta completamente la arquitectura nativa de Shopify (estructura de tema, objeto `product`, selector de variantes y comportamiento del carrito).
 
-No se utilizó ningún framework externo, manteniendo la solución liviana y alineada con la arquitectura nativa de Shopify.
+No se implementó un sistema de matching manual de combinaciones de variantes, sino que se extendió el comportamiento nativo mediante el uso de metafields personalizados, manteniendo la solución liviana, mantenible y alineada con las mejores prácticas de Shopify.
+
+No se utilizó ningún framework externo.
 
 ---
 
@@ -62,8 +66,10 @@ No se utilizó ningún framework externo, manteniendo la solución liviana y ali
 
 Nahuel González  
 Desarrollador Full-Stack  
-React | Shopify | .NET | Automatización con IA
+React | Shopify | .NET | Automatización con IA  
 
+
+---
 
 # 📦 Natulim – Shopify Technical Challenge - ENGLISH
 
@@ -71,23 +77,23 @@ React | Shopify | .NET | Automatización con IA
 
 This repository contains my implementation of a Shopify technical challenge.
 
-The objective was to develop a dynamic product variant management system using **Shopify Liquid** and **Vanilla JavaScript**, ensuring:
+The objective was to extend Shopify’s native variant system to dynamically render variant-specific content using **Shopify Liquid** and **Vanilla JavaScript**, ensuring:
 
-- Accurate variant selection  
-- Real-time price updates  
-- Validation before adding the product to the cart  
+- Dynamic rendering based on the selected variant  
+- Automatic content updates on real variant changes  
+- Full compatibility with Shopify’s native theme behavior  
 
-The solution was implemented directly within a Shopify theme environment.
+The solution was implemented directly within a Shopify theme environment without modifying Shopify’s internal variant selection logic.
 
 ---
 
 ## 🚀 Implemented Features
 
-- Dynamic variant detection and matching  
-- Automatic price update based on selected options  
-- Pre-submit validation of purchase form  
-- Synchronization between product data (`product.variants`) and frontend state  
-- Structured DOM event handling  
+- Dynamic rendering of variant-specific features  
+- Usage of custom variant-level metafields  
+- Synchronization with Shopify’s native variant selector  
+- Automatic content updates on actual variant changes  
+- Structured and safe DOM handling  
 
 ---
 
@@ -95,16 +101,18 @@ The solution was implemented directly within a Shopify theme environment.
 
 ### 🔹 Liquid Layer
 
-- Serialization of `product.variants` into JSON format  
-- Injection of product data into the frontend  
-- Structured markup to enable dynamic option selection  
+- Iteration over `product.variants`
+- Extraction of custom metafields (`variant.metafields.custom.variant_features`)
+- Controlled serialization of required metafield data
+- Creation of a structured `variantId → features` map
+- Injection into the frontend via `window.variantFeatures`
 
 ### 🔹 JavaScript Layer
 
-- Variant search and matching algorithm  
-- Selected options state management  
-- Dynamic update of price and availability  
-- Validation logic to prevent invalid combinations  
+- Listening to real Shopify variant change events (`input[name="id"]`)
+- Dynamic rendering based on selected `variantId`
+- Safe DOM updates
+- Initial render on page load to ensure visual consistency
 
 ---
 
@@ -119,9 +127,11 @@ The solution was implemented directly within a Shopify theme environment.
 
 ## 🧩 Context
 
-The implementation was developed while respecting Shopify’s inherent constraints (theme structure, `product` object, cart behavior, etc.), prioritizing clarity, maintainability, and predictable system behavior.
+The implementation fully respects Shopify’s native architecture (theme structure, `product` object, variant selector behavior, cart logic).
 
-No external frameworks were used, keeping the solution lightweight and aligned with Shopify’s native architecture.
+No manual variant matching algorithm was implemented. Instead, the native system was extended using custom metafields, keeping the solution lightweight, maintainable, and aligned with Shopify best practices.
+
+No external frameworks were used.
 
 ---
 
@@ -129,4 +139,4 @@ No external frameworks were used, keeping the solution lightweight and aligned w
 
 Nahuel González  
 Full-Stack Developer  
-React | Shopify | .NET | AI Automation
+React | Shopify | .NET | AI Automation  
